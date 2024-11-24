@@ -3,6 +3,7 @@ import SearchDetails from './components/SearchDetails';
 import { buttonVariants } from '../components/ui/button';
 import { cn } from '../lib/utils';
 import truncText from '../utils/truncText';
+import { Suspense } from 'react';
 
 export async function generateMetadata({ searchParams }) {
   const query = (await searchParams).query;
@@ -28,7 +29,9 @@ export default async function Page({ searchParams }) {
         <h1 className="tertiary-heading">
           Search results for {truncText(query, 12)}
         </h1>
-        <SearchDetails />
+        <Suspense>
+          <SearchDetails />
+        </Suspense>
       </section>
     </>
   );

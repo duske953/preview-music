@@ -6,6 +6,7 @@ import { useActiveMusicStore } from '../stores/activeMusicStore';
 import { cn } from '../lib/utils';
 import { FaHome } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
+import { Suspense } from 'react';
 export default function NavBar({ className }: { className: string }) {
   const activeMusic = useActiveMusicStore((state) => state.activeMusic);
 
@@ -19,7 +20,9 @@ export default function NavBar({ className }: { className: string }) {
       )}
     >
       <div className="lg:hidden">
-        <SearchBar />
+        <Suspense>
+          <SearchBar />
+        </Suspense>
       </div>
 
       <div className="grid grid-cols-1 items-center gap-14 justify-between lg:grid-cols-4">

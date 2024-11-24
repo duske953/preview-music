@@ -1,7 +1,7 @@
 'use client';
 import { FaSearch } from 'react-icons/fa';
 import { Input } from './ui/input';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -65,7 +65,9 @@ export function MobileSearchBar() {
               exit={{ opacity: 0, y: -200 }}
               className="fixed z-[3000] left-2/4  top-4"
             >
-              <SearchBar fn={() => setOpenSearchBar(false)} />
+              <Suspense>
+                <SearchBar fn={() => setOpenSearchBar(false)} />
+              </Suspense>
             </motion.div>
 
             <motion.div
