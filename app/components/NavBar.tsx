@@ -13,7 +13,7 @@ export default function NavBar({ className }: { className: string }) {
   return (
     <nav
       className={cn(
-        'flex gap-6 bg-slate-900 p-7',
+        'flex gap-6 bg-slate-900 p-7 z-10',
         !activeMusic.bgPlay && activeMusic.active && '-z-50',
         activeMusic.bgPlay && activeMusic.active && 'z-50',
         className
