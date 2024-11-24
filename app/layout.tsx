@@ -33,8 +33,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${audioWide.className} antialiased`}>
         <section className="grid grid-cols-[0.22fr_1fr] lg:grid-cols-1 max-w-[150rem] mx-auto">
+          <NavBar className="sticky flex-col h-svh left-0 top-0 lg:hidden w-full" />
           <Provider>
-            <NavBar className="flex-col h-svh fixed left-0 top-0 w-[18%] lg:hidden" />
             <section className="col-[2_/_-1] lg:col-span-1">
               <main className="min-h-svh">{children}</main>
               <Suspense>
