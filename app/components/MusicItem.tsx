@@ -33,7 +33,7 @@ export default function MusicItem({
     visible: (index) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: index * 0.004 },
+      transition: { delay: index * 0.007 },
     }),
     hidden: {
       y: 20,

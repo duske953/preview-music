@@ -23,7 +23,7 @@ export default function SearchArtistsData({ query }: { query: string }) {
   if (searchArtistsData.meta.returnedCount === 0) return <DataNotFound />;
 
   return (
-    <section>
+    <section className="mobile-container">
       <picture className="grid grid-cols-5 gap-y-10 gap-x-5 md:grid-cols-2 xs:grid-cols-1">
         {searchArtistsData?.search.data.artists.map((artist, i) => (
           <Artist

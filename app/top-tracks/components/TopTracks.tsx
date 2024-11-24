@@ -27,8 +27,8 @@ export default function TopTracks() {
   if (data[0].meta.returnedCount === 0) return <DataNotFound />;
 
   return (
-    <div>
-      <div className="music-list-container">
+    <div className="mobile-container">
+      <div className="music-list-container ">
         {data?.map((tracksData, i) => (
           <div className="music-list-container" key={i}>
             {tracksData?.tracks?.map((track, i) => (

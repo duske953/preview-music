@@ -25,7 +25,7 @@ export function ArtistTopAlbums({ artistId }: { artistId: string }) {
   if (albumData?.meta?.returnedCount === 0) return null;
 
   return (
-    <section className="py-20">
+    <section className="py-20 mobile-container">
       <h2 className="tertiary-heading">Top Albums</h2>
       <picture className="album-list-container">
         {albumData?.albums.map((album, i) => (

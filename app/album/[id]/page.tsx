@@ -26,7 +26,9 @@ export default async function Page({
       <AlbumDetails albumId={albumId} artistId={artistId} />
       <section className="py-16">
         <h2 className="text-3xl mb-4">More Albums</h2>
-        <TopArtistsAlbums artistId={artistId} />
+        <div className="mobile-container">
+          <TopArtistsAlbums artistId={artistId} />
+        </div>
       </section>
     </section>
   );

@@ -32,7 +32,7 @@ export default function SearchTracksData({ query }: { query: string }) {
   if (error) return <ErrorData />;
   if (data[0].meta.returnedCount === 0) return <DataNotFound />;
   return (
-    <section className="flex flex-col gap-10">
+    <section className="flex flex-col gap-10 mobile-container">
       {data?.map((tracksData, i) => (
         <div className="music-list-container" key={i}>
           {tracksData?.search.data.tracks.map((track, i) => (

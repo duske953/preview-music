@@ -29,7 +29,7 @@ export function ArtistTopTrack({ artistId }: { artistId: string }) {
   if (tracksData?.meta?.returnedCount === 0) return null;
 
   return (
-    <section>
+    <section className="mobile-container">
       <h2 className="tertiary-heading pt-9">Top songs</h2>
       <div className="music-list-container">
         {tracksData?.tracks?.map((track, i) => (
