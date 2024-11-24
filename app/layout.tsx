@@ -12,6 +12,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { Suspense } from 'react';
 const audioWide = Audiowide({
   subsets: ['latin'],
   weight: ['400'],
@@ -36,7 +37,10 @@ export default function RootLayout({
             <NavBar className="flex-col h-svh fixed left-0 top-0 w-[18%] lg:hidden" />
             <section className="col-[2_/_-1] lg:col-span-1">
               <main className="min-h-svh">{children}</main>
-              <NextTopLoader showSpinner={false} />
+              <Suspense>
+                <NextTopLoader showSpinner={false} />
+              </Suspense>
+
               <ToastContainer
                 className={`${audioWide.className} antialiased`}
                 bodyClassName={`${audioWide.className} antialiased`}
