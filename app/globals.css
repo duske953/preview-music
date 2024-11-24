@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
+@layer utilities {
+  .disable-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .disable-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .music-list-container {
+    @apply flex flex-col gap-10;
+  }
+
+  .album-list-container {
+    @apply grid grid-cols-5 gap-x-5 gap-y-10 md:grid-cols-2 xs:grid-cols-1;
+  }
+
+  .secondary-heading {
+    @apply text-3xl xs:text-xl;
+  }
+
+  .tertiary-heading {
+    @apply text-6xl font-bold text-gray-400 mb-10 sm:text-4xl sm:text-center;
+  }
+}
