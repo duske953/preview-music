@@ -1,5 +1,5 @@
 'use client';
-import ken from '@/public/ken.jpg';
+import heroImg from '@/public/heroImg.jpg';
 import Image from 'next/image';
 
 export default function Hero() {
@@ -10,8 +10,8 @@ export default function Hero() {
           width={6000}
           height={6000}
           className="w-full h-96 object-cover relative -z-40"
-          src={ken}
-          alt="ken"
+          src={heroImg}
+          alt="Hero image of a man wearing headphones"
         />
         <div className="absolute top-2/4 -translate-y-2/4 left-7">
           <h1 className="text-4xl w-2/4 md:text-3xl md:w-3/4 sm:w-full">
