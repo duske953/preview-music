@@ -7,7 +7,7 @@ interface playlistTypes {
 
 export const playlistStore = create<playlistTypes>()(
   persist(
-    (set, get) => ({
+    () => ({
       playlist: [],
     }),
     {
