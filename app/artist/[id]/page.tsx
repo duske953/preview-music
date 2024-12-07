@@ -19,7 +19,7 @@ export default async function Page({
 }) {
   const artistId = (await params).id;
   return (
-    <section className="px-5 py-10">
+    <section className="px-5 py-10 mobile-container">
       <ArtistProfile artistId={artistId} />
     </section>
   );

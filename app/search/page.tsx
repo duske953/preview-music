@@ -19,7 +19,7 @@ export default async function Page({ searchParams }) {
   const query = (await searchParams).query;
   const type = (await searchParams).type;
   return (
-    <>
+    <section className="mobile-container">
       <div className="flex gap-5 py-5 px-3  top-0 bg-gray-800 z-30 sticky">
         <SearchNavLink query={query} type={type} name="Albums" />
         <SearchNavLink query={query} type={type} name="Tracks" />
@@ -33,7 +33,7 @@ export default async function Page({ searchParams }) {
           <SearchDetails />
         </Suspense>
       </section>
-    </>
+    </section>
   );
 }
 

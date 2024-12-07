@@ -22,7 +22,7 @@ export default async function Page({
   const albumId = id.split('-')[0];
   const artistId = `art.${id.split('-')[1]}`;
   return (
-    <section className="px-4 py-9">
+    <section className="px-4 py-9 mobile-container">
       <AlbumDetails albumId={albumId} artistId={artistId} />
       <section className="py-16">
         <h2 className="text-3xl mb-4">More Albums</h2>

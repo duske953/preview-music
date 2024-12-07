@@ -41,7 +41,7 @@ body {
   }
 
   .mobile-container {
-    @apply lg:h-[80vh] overflow-auto;
+    @apply lg:h-[90vh] overflow-auto;
     &::-webkit-scrollbar {
       display: none;
     }

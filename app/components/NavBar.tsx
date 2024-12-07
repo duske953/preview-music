@@ -7,9 +7,11 @@ import { cn } from '../lib/utils';
 import { FaHome } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import { Suspense } from 'react';
+const navList = ['/top-albums', '/top-tracks', '/favourites'];
 export default function NavBar({ className }: { className: string }) {
   const activeMusic = useActiveMusicStore((state) => state.activeMusic);
 
+  const pathname = usePathname();
   return (
     <nav
       className={cn(
@@ -26,7 +28,13 @@ export default function NavBar({ className }: { className: string }) {
       </div>
 
       <div className="grid grid-cols-1 items-center gap-14 justify-between lg:grid-cols-4">
-        <NavIcon text="Home" href="/">
+        <NavIcon
+          text="Home"
+          href="/"
+          className={
+            pathname !== '/' && !navList.includes(pathname) && 'text-blue-500'
+          }
+        >
           <FaHome />
         </NavIcon>
 
@@ -50,10 +58,12 @@ function NavIcon({
   children,
   text,
   href,
+  className,
 }: {
   children: React.ReactNode;
   text: string;
   href: string;
+  className?: string;
 }) {
   const pathname = usePathname();
   return (
@@ -61,7 +71,8 @@ function NavIcon({
       href={href}
       className={cn(
         'flex flex-col items-center gap-1',
-        pathname === href && 'text-blue-500'
+        pathname === href && 'text-blue-500',
+        className
       )}
     >
       <span className="text-4xl lg:text-2xl">{children}</span>

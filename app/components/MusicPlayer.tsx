@@ -56,7 +56,7 @@ export function BgMusicPlayer() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          className="sticky bottom-0 bg-slate-800/100 px-2 py-3 md:w-full"
+          className="sticky bottom-0 bg-slate-800/100 px-2 py-6 md:w-full"
         >
           <div
             onClick={handleDisplayMusicCover}

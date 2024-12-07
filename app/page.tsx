@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <section>
+    <section className="mobile-container">
       <Hero />
       <PreviewTopAlbums limit={5} />
       <section className="grid grid-cols-2 py-10 px-6 gap-14 md:grid-cols-1">

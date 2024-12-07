@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <section className="px-5 py-14">
+    <section className="px-5 py-14 mobile-container">
       <h1 className="tertiary-heading">Favourite Tracks</h1>
       <FavouriteTracks />
     </section>

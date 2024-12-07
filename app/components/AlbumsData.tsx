@@ -33,7 +33,7 @@ export default function AlbumsData({
   if (error) return <ErrorData />;
   if (data?.[0].meta.returnedCount === 0) return <DataNotFound />;
   return (
-    <div className="mobile-container">
+    <div>
       <div className="flex flex-col gap-10">
         {data?.map((albums, i) => (
           <picture key={i} className="album-list-container">
