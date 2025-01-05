@@ -24,7 +24,8 @@ export default function TopTracks() {
 
   if (isLoading) return <SkeletonMusicItem length={10} />;
   if (error) return <ErrorData />;
-  if (data[0].meta.returnedCount === 0) return <DataNotFound />;
+  if (!data[0].meta || data[0].meta.returnedCount === 0)
+    return <DataNotFound />;
 
   return (
     <div className="mobile-container">

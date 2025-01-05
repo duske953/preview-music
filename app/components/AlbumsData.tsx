@@ -31,7 +31,8 @@ export default function AlbumsData({
   }
 
   if (error) return <ErrorData />;
-  if (data?.[0].meta.returnedCount === 0) return <DataNotFound />;
+  if (!data?.[0].meta || data?.[0].meta.returnedCount === 0)
+    return <DataNotFound />;
   return (
     <div>
       <div className="flex flex-col gap-10">

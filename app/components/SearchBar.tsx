@@ -23,18 +23,20 @@ export default function SearchBar({ fn }: { fn?: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSearch} className="z-[10000]" action="/search">
-      <div className="relative">
-        <Input
-          value={searchValue}
-          onChange={handleInputChange}
-          type="text"
-          className="rounded-md px-7"
-          placeholder="search"
-        />
-        <FaSearch className="absolute top-2/4 -translate-y-2/4 left-1 opacity-10" />
-      </div>
-    </form>
+    <>
+      <form onSubmit={handleSearch} className="z-[10000]" action="/search">
+        <div className="relative">
+          <Input
+            value={searchValue}
+            onChange={handleInputChange}
+            type="text"
+            className="rounded-md px-7"
+            placeholder="search"
+          />
+          <FaSearch className="absolute top-2/4 -translate-y-2/4 left-1 opacity-10" />
+        </div>
+      </form>
+    </>
   );
 }
 

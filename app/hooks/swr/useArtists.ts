@@ -13,6 +13,7 @@ export function useTopArtists(limit: number = 5, offset: number = 5) {
     isLoading: artistsLoading,
   } = useSWR<{
     artists: Array<artistsType>;
+    meta: { returnedCount: number };
   }>(`/artists/top?limit=${limit}&offset=${offset}`, fetcher, {
     revalidateOnFocus: false,
   });

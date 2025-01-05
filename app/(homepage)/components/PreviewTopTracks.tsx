@@ -13,7 +13,8 @@ export default function PreviewTopTracks() {
   const { handleActiveMusic } = useHandleActiveMusic();
   if (tracksLoading) return <SkeletonMusicItem />;
   if (tracksError) return <ErrorData />;
-  if (tracksData?.meta?.returnedCount === 0) return <DataNotFound />;
+  if (!tracksData.meta || tracksData?.meta?.returnedCount === 0)
+    return <DataNotFound />;
   return (
     <div className="">
       <div className="mb-9 flex items-center justify-between">

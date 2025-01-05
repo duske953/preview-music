@@ -30,7 +30,8 @@ export default function SearchTracksData({ query }: { query: string }) {
 
   if (isLoading) return <SkeletonMusicItem length={5} />;
   if (error) return <ErrorData />;
-  if (data[0].meta.returnedCount === 0) return <DataNotFound />;
+  if (!data[0].meta || data[0].meta.returnedCount === 0)
+    return <DataNotFound />;
   return (
     <section className="flex flex-col gap-10 mobile-container">
       {data?.map((tracksData, i) => (

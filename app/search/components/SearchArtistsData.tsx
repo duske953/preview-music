@@ -20,7 +20,8 @@ export default function SearchArtistsData({ query }: { query: string }) {
     );
 
   if (error) return <ErrorData />;
-  if (searchArtistsData.meta.returnedCount === 0) return <DataNotFound />;
+  if (!searchArtistsData.meta || searchArtistsData.meta.returnedCount === 0)
+    return <DataNotFound />;
 
   return (
     <section className="mobile-container">
