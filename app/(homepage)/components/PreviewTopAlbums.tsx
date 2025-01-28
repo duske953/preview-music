@@ -20,7 +20,6 @@ export default function PreviewTopAlbums({
     limit,
     offset
   );
-  console.log(albumsData);
   if (albumsLoading) return <SkeletonCard length={limit} />;
   if (albumsError) return <ErrorData />;
   if (!albumsData.meta || albumsData?.meta?.returnedCount === 0)
