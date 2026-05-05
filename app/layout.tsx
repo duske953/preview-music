@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Audiowide } from 'next/font/google';
+// import { Audiowide } from 'next/font/google';
 import './globals.css';
 import NavBar from './components/NavBar';
 import Provider from './Providers';
@@ -13,10 +13,10 @@ import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { Suspense } from 'react';
-const audioWide = Audiowide({
-  subsets: ['latin'],
-  weight: ['400'],
-});
+// const audioWide = Audiowide({
+//   subsets: ['latin'],
+//   weight: ['400'],
+// });
 
 export const metadata: Metadata = {
   creator: 'Eloho Kennedy',
@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${audioWide.className} antialiased`}>
+      <body className={`antialiased`}>
         <section className="grid grid-cols-[0.22fr_1fr] lg:grid-cols-1 max-w-[150rem] mx-auto">
           <NavBar className="sticky flex-col h-svh left-0 top-0 lg:hidden w-full" />
           <Provider>
@@ -42,8 +42,8 @@ export default function RootLayout({
               </Suspense>
 
               <ToastContainer
-                className={`${audioWide.className} antialiased`}
-                bodyClassName={`${audioWide.className} antialiased`}
+                // className={`${audioWide.className} antialiased`}
+                // bodyClassName={`${audioWide.className} antialiased`}
                 theme="dark"
                 hideProgressBar={true}
               />

@@ -15,7 +15,6 @@ export default function SearchDetails() {
   if (type.toLowerCase() === 'albums') {
     return (
       <AlbumsData
-        type="search-albums"
         fetcherKey={(pageIndex, previousPageData) =>
           searchAlbumKey(pageIndex, previousPageData, query)
         }

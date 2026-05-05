@@ -5,7 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.napster.com',
+        hostname: 'cdn-images.dzcdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.deezer.com',
       },
       {
         protocol: 'https',

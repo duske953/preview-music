@@ -5,7 +5,6 @@ import MusicItem from '@/app/components/MusicItem';
 import SkeletonMusicItem from '@/app/components/skeletons/SkeletonMusicItem';
 import { useTopTracks } from '@/app/hooks/swr/useTracks';
 import useHandleActiveMusic from '@/app/hooks/useHandleActiveMusic';
-import fetchImage from '@/app/utils/fetchImage';
 import Link from 'next/link';
 
 export default function PreviewTopTracks() {
@@ -30,14 +29,14 @@ export default function PreviewTopTracks() {
             <MusicItem
               index={i}
               key={track.name}
-              imgSrc={fetchImage('artists', '633x422', track.artistId)}
+              imgSrc={track.album?.images?.[0]?.url || ''}
               artistName={track.artistName}
               songName={track.name}
               handleActiveMusic={(e) =>
                 handleActiveMusic(e, {
                   songName: track.name,
                   artistName: track.artistName,
-                  imgSrc: fetchImage('artists', '633x422', track.artistId),
+                  imgSrc: track.album?.images?.[0]?.url || '',
                   previewURL: track.previewURL,
                 })
               }

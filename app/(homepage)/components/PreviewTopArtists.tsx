@@ -26,6 +26,7 @@ export default function PreviewTopArtists() {
             key={artist.name}
             id={artist.id}
             name={artist.name}
+            imgSrc={artist.images?.[0]?.url}
             size="size-20 xs:size-52"
           />
         ))}

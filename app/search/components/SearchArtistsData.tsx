@@ -3,6 +3,7 @@ import DataNotFound from '@/app/components/DataNotFound';
 import ErrorData from '@/app/components/ErrorData';
 import SkeletonArtist from '@/app/components/skeletons/SkeletonArtists';
 import fetcher from '@/app/utils/fetcher';
+import { artistsType } from '@/app/utils/musicTypes';
 import useSWR from 'swr';
 
 export default function SearchArtistsData({ query }: { query: string }) {
@@ -10,7 +11,7 @@ export default function SearchArtistsData({ query }: { query: string }) {
     data: searchArtistsData,
     isLoading,
     error,
-  } = useSWR(`/search?query=${query}&type=artist`, fetcher);
+  } = useSWR<{ data: artistsType[] }>(`/search/artist?q=${query}`, fetcher);
 
   if (isLoading)
     return (
@@ -20,18 +21,19 @@ export default function SearchArtistsData({ query }: { query: string }) {
     );
 
   if (error) return <ErrorData />;
-  if (!searchArtistsData.meta || searchArtistsData.meta.returnedCount === 0)
+  if (!searchArtistsData.data || searchArtistsData.data.length === 0)
     return <DataNotFound />;
 
   return (
     <section className="mobile-container">
       <picture className="grid grid-cols-5 gap-y-10 gap-x-5 md:grid-cols-2 xs:grid-cols-1">
-        {searchArtistsData?.search.data.artists.map((artist, i) => (
+        {searchArtistsData?.data.map((artist, i) => (
           <Artist
             index={i}
             key={artist.id}
             id={artist.id}
             name={artist.name}
+            imgSrc={artist.picture_xl || artist.picture_big}
             size="size-40"
           />
         ))}

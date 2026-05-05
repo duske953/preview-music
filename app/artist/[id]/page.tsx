@@ -3,8 +3,8 @@ import ArtistProfile from '../components/ArtistProfile';
 
 export async function generateMetadata({ params }) {
   const artistId = (await params).id;
-  const artistData = await fetcher(`/artists/${artistId}`);
-  const artistName = artistData.artists[0].name;
+  const artistData = await fetcher(`/artist/${artistId}`);
+  const artistName = artistData.name;
   return {
     title: `${artistName} | Explore Music and Albums`,
     description: `Discover music by ${artistName}. Explore their albums, tracks, and preview songs to dive into their world of music.`,

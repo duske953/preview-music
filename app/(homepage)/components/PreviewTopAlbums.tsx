@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import MusicCard from '../../components/MusicCard';
 import { useTopAlbums } from '../../hooks/swr/useAlbums';
-import { imgServer } from '../../utils/fetcher';
 import SkeletonCard from '@/app/components/skeletons/SkeletonCard';
 import ErrorData from '@/app/components/ErrorData';
 import DataNotFound from '@/app/components/DataNotFound';
@@ -10,16 +9,11 @@ import DataNotFound from '@/app/components/DataNotFound';
 export default function PreviewTopAlbums({
   title = 'Trending Albums',
   limit,
-  offset = 5,
 }: {
   title?: string;
   limit: number;
-  offset?: number;
 }) {
-  const { albumsData, albumsLoading, albumsError } = useTopAlbums(
-    limit,
-    offset
-  );
+  const { albumsData, albumsLoading, albumsError } = useTopAlbums(limit);
   if (albumsLoading) return <SkeletonCard length={limit} />;
   if (albumsError) return <ErrorData />;
   if (!albumsData.meta || albumsData?.meta?.returnedCount === 0)
@@ -40,10 +34,10 @@ export default function PreviewTopAlbums({
             albumId={album.id}
             index={i}
             key={album.id}
-            imgSrc={`${imgServer}/albums/${album.id}/images/500x500.jpg`}
+            imgSrc={album.images?.[0]?.url || ''}
             artistName={album.artistName}
             albumName={album.name}
-            artistId={album.contributingArtists.primaryArtist.split('art.')[1]}
+            artistId={album.contributingArtists.primaryArtist}
           />
         ))}
       </picture>

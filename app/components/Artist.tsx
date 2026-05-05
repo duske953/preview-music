@@ -1,7 +1,6 @@
 import { Variants, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import fetchImage from '../utils/fetchImage';
 import useErrorImg from '../hooks/useErrorImg';
 import { cn } from '../lib/utils';
 import useStartScrollAnimation from '../hooks/useStartScrollAnimation';
@@ -10,11 +9,13 @@ export default function Artist({
   name,
   size,
   index,
+  imgSrc,
 }: {
   id: string;
   name: string;
   size: string;
   index: number;
+  imgSrc?: string;
 }) {
   const { handleErrorImg, imgError } = useErrorImg();
   const { animationRef, controls } = useStartScrollAnimation();
@@ -47,9 +48,7 @@ export default function Artist({
           className={cn('object-cover rounded-full', size)}
           width={1000}
           height={1000}
-          src={
-            imgError.error ? imgError.src : fetchImage('artists', '633x422', id)
-          }
+          src={imgError.error ? imgError.src : imgSrc}
           alt={`Image of ${name}`}
           onError={handleErrorImg}
         />

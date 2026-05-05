@@ -1,5 +1,6 @@
 'use client';
-export const topAlbumKey = (pageIndex, previousPageData) => {
-  if (previousPageData && previousPageData.albums.length === 0) return null;
-  return `/albums/top?limit=10&offset=${pageIndex * 10}&range=month`;
+const LIMIT = 5;
+export const topAlbumKey = (pageIndex = 5, previousPageData) => {
+  if (previousPageData && previousPageData.data.length === 0) return null;
+  return `/editorial/0/releases?limit=${LIMIT}&index=${pageIndex * LIMIT}`;
 };

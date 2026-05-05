@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <section className="px-4 py-10 mobile-container">
       <h1 className="tertiary-heading">Trending Albums</h1>
-      <AlbumsData type="top-albums" fetcherKey={topAlbumKey} />
+      <AlbumsData fetcherKey={topAlbumKey} />
     </section>
   );
 }

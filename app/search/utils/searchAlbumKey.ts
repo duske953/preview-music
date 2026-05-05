@@ -4,10 +4,10 @@ export default function searchAlbumKey(
   query: string
 ) {
   return () => {
-    if (previousPageData && previousPageData.meta.returnedCount < 5)
+    if (previousPageData && previousPageData.data.length === 0)
       return null;
-    return `/search?query=${query}&offset=${
+    return `/search/album?q=${query}&index=${
       pageIndex * 10
-    }&per_type_limit=10&type=album`;
+    }&limit=10`;
   };
 }

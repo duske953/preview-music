@@ -1,11 +1,5 @@
-export const path = 'https://api.napster.com/v2.2';
-export const imgServer = 'https://api.napster.com/imageserver/v2';
+'use server';
 
-export default function fetcher(resource: string) {
-  return fetch(`${path}/${resource}`, {
-    method: 'GET',
-    headers: {
-      apikey: process.env.NEXT_PUBLIC_API_KEY as string,
-    },
-  }).then((response) => response.json());
+export default async function fetcher(url: string) {
+  return await fetch(`https://api.deezer.com${url}`).then((r) => r.json());
 }

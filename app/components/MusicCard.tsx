@@ -27,6 +27,7 @@ export default function MusicCard({
   index,
 }: MusicCardTypes) {
   const { imgError, handleErrorImg } = useErrorImg();
+
   const [imgLoaded, setImgLoaded] = useState(false);
   const MusicCardVariants: Variants = {
     visible: (index) => ({
@@ -45,6 +46,7 @@ export default function MusicCard({
   function handleLoadingComplete() {
     setImgLoaded(true);
   }
+
   return (
     <MotionLink
       ref={animationRef}
@@ -68,7 +70,7 @@ export default function MusicCard({
               imgLoaded ? 'opacity-100 blur-none' : 'opacity-0 blur-sm'
             }`}
             onError={handleErrorImg}
-            onLoadingComplete={handleLoadingComplete}
+            onLoad={handleLoadingComplete}
             width={5000}
             height={5000}
             src={imgError.error ? imgError.src : imgSrc}

@@ -1,7 +1,6 @@
 'use client';
 
 import MusicItem from '@/app/components/MusicItem';
-import fetchImage from '@/app/utils/fetchImage';
 import fetcher from '@/app/utils/fetcher';
 import Image from 'next/image';
 import useSWR from 'swr';
@@ -26,41 +25,40 @@ export default function AlbumDetails({
     data: albumData,
     isLoading: albumLoading,
     error,
-  } = useSWR<{
-    albums: Array<albumTypes>;
-    meta: { returnedCount: number };
-    code: string;
-  }>(`/albums/${albumId}`, fetcher);
+  } = useSWR<albumTypes>(`/album/${albumId}`, fetcher);
   if (error) return <ErrorData />;
-  if (
-    albumData?.meta?.returnedCount === 0 ||
-    albumData?.code === 'InvalidContent'
-  )
-    return <DataNotFound />;
+  if (albumData?.error?.message === 'no data') return <DataNotFound />;
   return (
     <section className="grid grid-cols-2 gap-5 md:grid-cols-1">
       <AlbumDetailCover
-        albumId={albumId}
         albumLoading={albumLoading}
-        artistName={albumData?.albums?.[0].artistName}
+        artistName={albumData?.artist?.name}
+        imgSrc={albumData?.cover_xl || albumData?.cover_big}
       />
-      <AlbumTracks
-        artistId={artistId}
-        albumId={albumId}
-        albumData={albumData}
-      />
+      {!albumLoading && albumData && (
+        <AlbumTracks
+          artistId={artistId}
+          albumId={albumId}
+          albumData={albumData}
+        />
+      )}
+      {albumLoading && (
+        <div className="py-4">
+          <SkeletonMusicItem />
+        </div>
+      )}
     </section>
   );
 }
 
 function AlbumDetailCover({
-  albumId,
   albumLoading,
   artistName,
+  imgSrc,
 }: {
-  albumId: string;
   albumLoading: boolean;
   artistName: string;
+  imgSrc?: string;
 }) {
   const { handleErrorImg, imgError } = useErrorImg();
   if (albumLoading)
@@ -75,11 +73,7 @@ function AlbumDetailCover({
         className="rounded-xl w-full md:object-cover"
         width={1000}
         height={1000}
-        src={
-          imgError.error
-            ? imgError.src
-            : fetchImage('albums', '500x500', albumId)
-        }
+        src={imgError.error ? imgError.src : imgSrc || ''}
         onError={handleErrorImg}
         alt={`Artist-${artistName}`}
       />
@@ -94,7 +88,7 @@ function AlbumTracks({
 }: {
   albumId: string;
   artistId: string;
-  albumData: { albums: Array<albumTypes> };
+  albumData: albumTypes;
 }) {
   const { handleActiveMusic } = useHandleActiveMusic();
   const {
@@ -102,9 +96,10 @@ function AlbumTracks({
     isLoading: trackLoading,
     error,
   } = useSWR<{
-    tracks: Array<trackTypes>;
-    meta: { returnedCount: number };
-  }>(`/albums/${albumId}/tracks`, fetcher);
+    data: trackTypes[];
+    total: number;
+  }>(`/album/${albumId}/tracks`, fetcher);
+
   if (trackLoading)
     return (
       <section>
@@ -120,38 +115,38 @@ function AlbumTracks({
       </section>
     );
   if (error) return <ErrorData />;
-  if (data?.meta?.returnedCount === 0) return <DataNotFound />;
+  if (data?.total <= 0) return <DataNotFound />;
   return (
     <div>
       <div className="flex flex-col gap-3 mb-4">
-        {!albumData?.albums[0].isExplicit && (
+        {albumData?.explicit_lyrics && (
           <MdExplicit className="size-8 text-red-500 sm:self-center" />
         )}
         <h1 className="text-5xl">
           <Link href={`/artist/${artistId}`}>
-            {truncText(albumData?.albums[0]?.artistName, 25)}
+            {truncText(albumData?.artist?.name, 25)}
           </Link>
         </h1>
         <p className="uppercase text-2xl text-blue-600 sm:text-lg">
-          {albumData?.albums[0].name}
+          {albumData?.title}
         </p>
       </div>
       <div className="music-list-container gap-8 h-72 overflow-y-scroll disable-scrollbar">
-        {data.tracks.map((track, i) => (
+        {data?.data?.map((track, i) => (
           <MusicItem
             index={i}
-            key={track.name}
-            artistName={track.artistName}
-            songName={track.name}
-            imgSrc={fetchImage('artists', '633x422', track.artistId)}
-            id={track.name}
-            previewURL={track.previewURL}
+            key={track.title}
+            artistName={track.artist.name}
+            songName={track.title}
+            imgSrc={albumData?.cover_xl || albumData?.cover_big}
+            id={track.title}
+            previewURL={track.preview}
             handleActiveMusic={(e) =>
               handleActiveMusic(e, {
-                songName: track.name,
-                artistName: track.artistName,
-                imgSrc: fetchImage('artists', '633x422', track.artistId),
-                previewURL: track.previewURL,
+                songName: track.title,
+                artistName: track.artist.name,
+                imgSrc: albumData?.cover_xl || albumData?.cover_big,
+                previewURL: track.preview,
               })
             }
           />

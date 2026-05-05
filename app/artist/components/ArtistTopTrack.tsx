@@ -1,11 +1,11 @@
-import fetchImage from '@/app/utils/fetchImage';
 import fetcher from '@/app/utils/fetcher';
 import useSWR from 'swr';
 import MusicItem from '@/app/components/MusicItem';
 import useHandleActiveMusic from '@/app/hooks/useHandleActiveMusic';
-import { trackTypes } from '@/app/utils/musicTypes';
 import SkeletonMusicItem from '@/app/components/skeletons/SkeletonMusicItem';
 import ErrorData from '@/app/components/ErrorData';
+import { trackTypes } from '@/app/utils/musicTypes';
+import DataNotFound from '@/app/components/DataNotFound';
 
 export function ArtistTopTrack({ artistId }: { artistId: string }) {
   const {
@@ -13,9 +13,9 @@ export function ArtistTopTrack({ artistId }: { artistId: string }) {
     isLoading,
     error,
   } = useSWR<{
-    tracks: Array<trackTypes>;
-    meta: { returnedCount: number };
-  }>(`/artists/${artistId}/tracks/top`, fetcher);
+    data: trackTypes[];
+    total: number;
+  }>(`/artist/${artistId}/top?limit=20`, fetcher);
 
   const { handleActiveMusic } = useHandleActiveMusic();
 
@@ -26,29 +26,29 @@ export function ArtistTopTrack({ artistId }: { artistId: string }) {
       </div>
     );
   if (error) return <ErrorData />;
-  if (tracksData?.meta?.returnedCount === 0) return null;
+  if (tracksData?.total <= 0) return <DataNotFound />;
 
   return (
     <section>
       <h2 className="tertiary-heading pt-9">Top songs</h2>
       <div className="music-list-container">
-        {tracksData?.tracks?.map((track, i) => (
+        {tracksData?.data?.map((track, i) => (
           <MusicItem
             index={i}
-            key={track.previewURL}
-            imgSrc={fetchImage('artists', '633x422', track.artistId)}
-            artistName={track.artistName}
-            songName={track.name}
+            key={track.id}
+            imgSrc={track.album.cover_xl || track.album.cover_big}
+            artistName={track.artist.name}
+            songName={track.title}
             handleActiveMusic={(e) =>
               handleActiveMusic(e, {
-                songName: track.name,
-                artistName: track.artistName,
-                imgSrc: fetchImage('artists', '633x422', track.artistId),
-                previewURL: track.previewURL,
+                songName: track.title,
+                artistName: track.artist.name,
+                imgSrc: track.album.cover_xl || track.album.cover_big,
+                previewURL: track.preview,
               })
             }
-            id={track.name}
-            previewURL={track.previewURL}
+            id={track.title}
+            previewURL={track.preview}
           />
         ))}
       </div>

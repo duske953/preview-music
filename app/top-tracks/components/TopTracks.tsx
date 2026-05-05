@@ -2,53 +2,48 @@
 
 import MusicItem from '@/app/components/MusicItem';
 import { useInfinitePagination } from '@/app/hooks/useInfinitePagination';
-import fetchImage from '@/app/utils/fetchImage';
 import useHandleActiveMusic from '@/app/hooks/useHandleActiveMusic';
 import ButtonLoadData from '@/app/components/ButtonLoadData';
 import SkeletonMusicItem from '@/app/components/skeletons/SkeletonMusicItem';
-import { trackTypes } from '@/app/utils/musicTypes';
 import ErrorData from '@/app/components/ErrorData';
 import DataNotFound from '@/app/components/DataNotFound';
+import { trackTypes } from '@/app/utils/musicTypes';
 export function topTracksKey(pageIndex, previousPageData) {
-  if (previousPageData && previousPageData.tracks.length === 0) return null;
-  return `/tracks/top?offset=${pageIndex * 10}&limit=10`;
+  if (previousPageData && previousPageData.data.length === 0) return null;
+  return `/chart/0/tracks?index=${pageIndex * 10}&limit=10`;
 }
 
 export default function TopTracks() {
   const { data, isValidating, setSize, size, isLoading, error } =
-    useInfinitePagination<{
-      tracks: Array<trackTypes>;
-      meta: { returnedCount: number };
-    }>(topTracksKey);
+    useInfinitePagination<{ data: trackTypes[]; total: number }>(topTracksKey);
   const { handleActiveMusic } = useHandleActiveMusic();
 
   if (isLoading) return <SkeletonMusicItem length={10} />;
   if (error) return <ErrorData />;
-  if (!data[0].meta || data[0].meta.returnedCount === 0)
-    return <DataNotFound />;
+  if (!data || data[0]?.total <= 0) return <DataNotFound />;
 
   return (
     <div className="mobile-container">
       <div className="music-list-container ">
-        {data?.map((tracksData, i) => (
+        {data?.map((pageData, i) => (
           <div className="music-list-container" key={i}>
-            {tracksData?.tracks?.map((track, i) => (
+            {pageData?.data?.map((track, i) => (
               <MusicItem
                 index={i}
-                key={track.previewURL}
-                imgSrc={fetchImage('artists', '633x422', track.artistId)}
-                artistName={track.artistName}
-                songName={track.name}
+                key={track.id}
+                imgSrc={track.album.cover_xl || track.album.cover_big}
+                artistName={track.artist.name}
+                songName={track.title}
                 handleActiveMusic={(e) =>
                   handleActiveMusic(e, {
-                    songName: track.name,
-                    artistName: track.artistName,
-                    imgSrc: fetchImage('artists', '633x422', track.artistId),
-                    previewURL: track.previewURL,
+                    songName: track.title,
+                    artistName: track.artist.name,
+                    imgSrc: track.album.cover_xl || track.album.cover_big,
+                    previewURL: track.preview,
                   })
                 }
-                id={track.name}
-                previewURL={track.previewURL}
+                id={track.title}
+                previewURL={track.preview}
               />
             ))}
           </div>
@@ -61,7 +56,7 @@ export default function TopTracks() {
         </div>
       )}
       <ButtonLoadData
-        disabled={isValidating || data.slice(-1)[0].meta.returnedCount < 5}
+        disabled={isValidating || data.slice(-1)[0]?.data?.length < 10}
         setSize={setSize}
         size={size}
       />
