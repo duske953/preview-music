@@ -65,7 +65,7 @@ export default function RootLayout({
               className="text-blue-500"
               target="_blank"
               rel="noreferrer noopener"
-              href="https://eloho.vercel.app"
+              href="https://eloho.dev"
             >
               Eloho Kennedy
             </Link>
